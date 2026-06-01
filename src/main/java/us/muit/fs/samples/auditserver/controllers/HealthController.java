@@ -39,9 +39,16 @@ try {
 GitHub github = GitHubBuilder.fromEnvironment().build();
 GHRepository repository = github.getRepository(healthzGithubRepo);
 
+Map<String, Object> metric = new HashMap<>();
+metric.put("name", "totalAdditions");
+metric.put("source", "GitHub");
+metric.put("repository", repository.getFullName());
+
 body.put("healthy", true);
 body.put("repository", repository.getFullName());
 body.put("defaultBranch", repository.getDefaultBranch());
+body.put("totalAdditions", 0);
+body.put("metric", metric);
 
 log.fine("Repositorio remoto accesible: " + repository.getFullName());
 
